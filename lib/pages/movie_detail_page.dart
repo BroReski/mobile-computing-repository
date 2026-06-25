@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-class MovieDetailPage extends StatelessWidget {
+class MovieDetailPage extends StatefulWidget {
   final String title;
   final String date;
   final String rating;
@@ -18,24 +18,68 @@ class MovieDetailPage extends StatelessWidget {
   });
 
   @override
+  State<MovieDetailPage> createState() =>
+      _MovieDetailPageState();
+}
+
+class _MovieDetailPageState
+    extends State<MovieDetailPage> {
+
+  late bool isFavorite;
+
+  @override
+  void initState() {
+    super.initState();
+    isFavorite = widget.favorite;
+  }
+
+  void toggleFavorite() {
+    setState(() {
+      isFavorite = !isFavorite;
+    });
+
+    widget.onFavoriteToggle();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(title),
+        title: Text(widget.title),
+
+        actions: [
+          IconButton(
+            onPressed: toggleFavorite,
+            icon: Icon(
+              isFavorite
+                  ? Icons.favorite
+                  : Icons.favorite_border,
+              color: Colors.red,
+            ),
+          ),
+        ],
       ),
+
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(20),
+
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+          crossAxisAlignment:
+          CrossAxisAlignment.start,
+
           children: [
             Center(
               child: Container(
                 width: 220,
                 height: 320,
+
                 decoration: BoxDecoration(
                   color: Colors.grey.shade300,
-                  borderRadius: BorderRadius.circular(16),
+
+                  borderRadius:
+                  BorderRadius.circular(16),
                 ),
+
                 child: const Icon(
                   Icons.movie,
                   size: 100,
@@ -46,7 +90,7 @@ class MovieDetailPage extends StatelessWidget {
             const SizedBox(height: 24),
 
             Text(
-              title,
+              widget.title,
               style: const TextStyle(
                 fontSize: 28,
                 fontWeight: FontWeight.bold,
@@ -57,29 +101,30 @@ class MovieDetailPage extends StatelessWidget {
 
             Row(
               children: [
-                IconButton(
-                  onPressed: () {
-                    onFavoriteToggle();
-                    Navigator.pop(context);
-                  },
-                  icon: Icon(
-                    favorite
-                        ? Icons.favorite
-                        : Icons.favorite_border,
-                    color: Colors.red,
-                    size: 32,
-                  ),
+                Icon(
+                  isFavorite
+                      ? Icons.favorite
+                      : Icons.favorite_border,
+                  color: Colors.red,
+                  size: 30,
                 ),
 
+                const SizedBox(width: 10),
+
                 Text(
-                  favorite
+                  isFavorite
                       ? "Favorited"
-                      : "Add to Favorite",
+                      : "Add To Favorite",
+                  style: const TextStyle(
+                    fontSize: 16,
+                    fontWeight:
+                    FontWeight.w500,
+                  ),
                 ),
               ],
             ),
 
-            const SizedBox(height: 16),
+            const SizedBox(height: 20),
 
             Text(
               "Release Date",
@@ -89,7 +134,7 @@ class MovieDetailPage extends StatelessWidget {
             ),
 
             Text(
-              date,
+              widget.date,
               style: const TextStyle(
                 fontSize: 18,
               ),
@@ -103,12 +148,15 @@ class MovieDetailPage extends StatelessWidget {
                   Icons.star,
                   color: Colors.amber,
                 ),
+
                 const SizedBox(width: 8),
+
                 Text(
-                  rating,
+                  widget.rating,
                   style: const TextStyle(
                     fontSize: 18,
-                    fontWeight: FontWeight.bold,
+                    fontWeight:
+                    FontWeight.bold,
                   ),
                 ),
               ],
@@ -120,14 +168,15 @@ class MovieDetailPage extends StatelessWidget {
               "Synopsis",
               style: TextStyle(
                 fontSize: 22,
-                fontWeight: FontWeight.bold,
+                fontWeight:
+                FontWeight.bold,
               ),
             ),
 
             const SizedBox(height: 12),
 
             Text(
-              "$title adalah salah satu film populer yang memiliki banyak penggemar di seluruh dunia. Film ini mendapatkan rating tinggi dan menjadi salah satu tontonan favorit bagi banyak orang.",
+              "${widget.title} adalah salah satu film populer yang memiliki banyak penggemar di seluruh dunia. Film ini mendapatkan rating tinggi dan menjadi salah satu tontonan favorit bagi banyak orang.",
               style: const TextStyle(
                 fontSize: 16,
                 height: 1.5,
