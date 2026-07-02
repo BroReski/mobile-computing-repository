@@ -1,4 +1,4 @@
-import 'services/movie_api_service.dart';
+import 'data/datasource/movie_api_service.dart';
 
 void testApi() async {
   final api = MovieApiService();

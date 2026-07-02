@@ -1,6 +1,6 @@
 import 'package:dio/dio.dart';
 
-import '../config/api_config.dart';
+import '../../core/config/api_config.dart';
 import '../models/movie.dart';
 
 class MovieApiService {
