@@ -32,7 +32,7 @@ class _MovieListPageState extends State<MovieListPage> {
     },
     {
       "title": "Inception",
-      "date": "16 Juli 2010",
+      "date": "16 Juli 2014",
       "rating": "8.8 / 10",
       "favorite": false,
     },
